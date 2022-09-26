@@ -21,7 +21,7 @@ import tensorflow as tf
 from keras.utils.tf_inspect import getfullargspec
 from packaging import version
 
-from merlin.core.dispatch import DataFrameType
+from merlin.core.protocols import DataFrameLike
 from merlin.io import Dataset
 from merlin.models.tf.core.base import Block, ModelContext
 from merlin.models.tf.typing import TabularData
@@ -371,7 +371,7 @@ class TensorInitializer(tf.keras.initializers.Initializer):
         return weights
 
     @classmethod
-    def from_dataset(cls, data: Union[Dataset, DataFrameType], **kwargs) -> "TensorInitializer":
+    def from_dataset(cls, data: Union[Dataset, DataFrameLike], **kwargs) -> "TensorInitializer":
         if hasattr(data, "to_ddf"):
             data = data.to_ddf().compute()
         embeddings = df_to_tensor(data)

@@ -4,7 +4,8 @@ import typing as tp
 import numpy as np
 import tensorflow as tf
 
-from merlin.core.dispatch import DataFrameType, concat_columns, get_lib
+from merlin.core.dispatch import concat_columns, get_lib
+from merlin.core.protocols import DataFrameLike
 from merlin.models.tf.core.base import Block
 from merlin.models.tf.dataset import BatchedDataset
 from merlin.models.tf.models.base import Model, RetrievalModel
@@ -38,10 +39,10 @@ class ModelEncode:
 
     def __call__(
         self,
-        df: DataFrameType,
+        df: DataFrameLike,
         filter_input_columns: tp.Optional[tp.List[str]] = None,
         filter_output_columns: tp.Optional[tp.List[str]] = None,
-    ) -> DataFrameType:
+    ) -> DataFrameLike:
         # Set defaults
         iterator_func = self.data_iterator_func or (lambda x: [x])
         encode_func = self.model_encode_func or (lambda x, y: x(y))
@@ -59,7 +60,7 @@ class ModelEncode:
 
         return output_df
 
-    def transform(self, col_selector, df: DataFrameType, **kwargs) -> DataFrameType:
+    def transform(self, col_selector, df: DataFrameLike, **kwargs) -> DataFrameLike:
         return self(df[col_selector], **kwargs)
 
 

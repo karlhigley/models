@@ -20,7 +20,7 @@ import tensorflow as tf
 from tensorflow.python import to_dlpack
 
 import merlin.io
-from merlin.core.dispatch import DataFrameType
+from merlin.core.protocols import DataFrameLike
 from merlin.models.tf.core.base import Block, PredictionOutput
 from merlin.models.tf.utils import tf_utils
 from merlin.models.tf.utils.batch_utils import TFModelEncode
@@ -82,7 +82,7 @@ class IndexBlock(Block):
         return cls.from_dataset(embedding_df, **kwargs)
 
     @staticmethod
-    def _check_unique_ids(data: DataFrameType):
+    def _check_unique_ids(data: DataFrameLike):
         if data.index.to_series().nunique() != data.shape[0]:
             raise ValueError("Please make sure that `data` contains unique indices")
 

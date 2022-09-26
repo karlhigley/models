@@ -24,7 +24,7 @@ from tensorflow.python import to_dlpack
 from tensorflow.python.tpu.tpu_embedding_v2_utils import FeatureConfig, TableConfig
 
 import merlin.io
-from merlin.core.dispatch import DataFrameType
+from merlin.core.protocols import DataFrameLike
 from merlin.io import Dataset
 from merlin.models.tf.blocks.mlp import InitializerType, RegularizerType
 from merlin.models.tf.core.base import Block, BlockType
@@ -80,7 +80,7 @@ class EmbeddingTableBase(Block):
     @classmethod
     def from_pretrained(
         cls,
-        data: Union[Dataset, DataFrameType],
+        data: Union[Dataset, DataFrameLike],
         col_schema: Optional[ColumnSchema] = None,
         trainable=True,
         **kwargs,
@@ -247,7 +247,7 @@ class EmbeddingTable(EmbeddingTableBase):
     @classmethod
     def from_pretrained(
         cls,
-        data: Union[Dataset, DataFrameType],
+        data: Union[Dataset, DataFrameLike],
         trainable=True,
         name=None,
         col_schema=None,
@@ -257,7 +257,7 @@ class EmbeddingTable(EmbeddingTableBase):
 
         Parameters
         ----------
-        data : Union[Dataset, DataFrameType]
+        data : Union[Dataset, DataFrameLike]
             A dataset containing the pre-trained embedding weights
         trainable : bool
             Whether the layer should be trained or not.
